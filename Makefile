@@ -2,7 +2,7 @@ CC ?= gcc
 
 # Keep flags conservative/portable; override on CLI if desired:
 #   make CFLAGS='-O3 -march=native -Wall -Wextra -std=c11'
-CFLAGS ?= -O3 -Wall -Wextra -std=c11
+CFLAGS ?= -O3 -Wextra -std=c11 -Wno-pointer-sign
 
 # Some environments inject -flto via CFLAGS; disable it for portability.
 CFLAGS += -fno-lto

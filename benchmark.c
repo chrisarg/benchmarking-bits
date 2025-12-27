@@ -4,6 +4,7 @@
 #include <string.h>
 
 static int *g_rand_indices = NULL;
+static uint32_t *g_rand_indices_u32 = NULL;
 static int g_rand_indices_len = 0;
 
 typedef struct benchmark_result {
@@ -33,7 +34,7 @@ void free_random_indices(void);
 // Benchmark function for CRoaring new bitset creation
 double CRoaring_new(int bitveclen, int batch_size);
 double CRoaring_FillHalfSeq(int bitveclen, int batch_size);
-double CRoaring_FillHalfManySeq(int bitveclen, int batch_size);
+double CRoaring_FillHalfMany(int bitveclen, int batch_size);
 double CRoaring_PopCount(int bitveclen, int batch_size);
 double CRoaring_Inter(int bitveclen, int batch_size);
 double CRoaring_InterCount(int bitveclen, int batch_size);
@@ -48,7 +49,7 @@ double CBitset_InterCount(int bitveclen, int batch_size);
 // Bit_T benchmark function
 double Bit_T_new(int bitveclen, int batch_size);
 double Bit_T_FillHalfSeq(int bitveclen, int batch_size);
-double Bit_T_FillHalfManySeq(int bitveclen, int batch_size);
+double Bit_T_FillHalfMany(int bitveclen, int batch_size);
 double Bit_T_PopCount(int bitveclen, int batch_size);
 double Bit_T_Inter(int bitveclen, int batch_size);
 double Bit_T_InterCount(int bitveclen, int batch_size);
@@ -96,7 +97,7 @@ int main(int argc, char *argv[]) {
             test_num);
   BENCHMARK(CRoaring, FillHalfSeq, bitveclen, batch_size, num_of_iterations,
             results, test_num);
-  BENCHMARK(CRoaring, FillHalfManySeq, bitveclen, batch_size, num_of_iterations,
+  BENCHMARK(CRoaring, FillHalfMany, bitveclen, batch_size, num_of_iterations,
             results, test_num);
   BENCHMARK(CRoaring, PopCount, bitveclen, batch_size, num_of_iterations,
             results, test_num);
@@ -120,7 +121,7 @@ int main(int argc, char *argv[]) {
             test_num);
   BENCHMARK(Bit_T, FillHalfSeq, bitveclen, batch_size, num_of_iterations,
             results, test_num);
-  BENCHMARK(Bit_T, FillHalfManySeq, bitveclen, batch_size, num_of_iterations,
+  BENCHMARK(Bit_T, FillHalfMany, bitveclen, batch_size, num_of_iterations,
             results, test_num);
   BENCHMARK(Bit_T, PopCount, bitveclen, batch_size, num_of_iterations, results,
             test_num);
@@ -161,7 +162,7 @@ double CRoaring_FillHalfSeq(int bitveclen, int batch_size) {
     roaring_bitmap_t *r1 = roaring_bitmap_create_with_capacity(bitveclen);
     assert(r1 != NULL);
     for (int i = 0; i < bitveclen / 2; i++) {
-      roaring_bitmap_add(r1, (uint32_t)g_rand_indices);
+      roaring_bitmap_add(r1, g_rand_indices_u32[i]);
     }
     roaring_bitmap_free(r1);
   }
@@ -170,7 +171,7 @@ double CRoaring_FillHalfSeq(int bitveclen, int batch_size) {
   return timeElapsed;
 }
 
-double CRoaring_FillHalfManySeq(int bitveclen, int batch_size) {
+double CRoaring_FillHalfMany(int bitveclen, int batch_size) {
   struct timespec start_time, end_time;
   double timeElapsed = 0;
   clock_gettime(CLOCK_MONOTONIC, &start_time);
@@ -414,7 +415,7 @@ double Bit_T_FillHalfSeq(int bitveclen, int batch_size) {
   return timeElapsed;
 }
 
-double Bit_T_FillHalfManySeq(int bitveclen, int batch_size) {
+double Bit_T_FillHalfMany(int bitveclen, int batch_size) {
   struct timespec start_time, end_time;
   double timeElapsed = 0;
   clock_gettime(CLOCK_MONOTONIC, &start_time);
@@ -512,13 +513,19 @@ double Bit_T_InterCount(int bitveclen, int batch_size) {
 void test_bit_funcs(int bitveclen) {
   // CRoaring
   roaring_bitmap_t *r1 = roaring_bitmap_create_with_capacity(bitveclen);
+  roaring_bitmap_t *r2 = roaring_bitmap_create_with_capacity(bitveclen);
+  int *arr = (int *)calloc((bitveclen / 2), sizeof(int));
   assert(r1 != NULL);
   for (int i = 0; i < bitveclen / 2; i++) {
     roaring_bitmap_add(r1, i);
+    arr[i] = i;
   }
   uint64_t count1 = roaring_bitmap_get_cardinality(r1);
+  roaring_bitmap_add_many(r2, bitveclen / 2, (uint32_t *)arr);
+  uint64_t countr2 = roaring_bitmap_get_cardinality(r2);
+  free(arr);
   roaring_bitmap_free(r1);
-
+  roaring_bitmap_free(r2);
   // CBitset
   bitset_t *b1 = bitset_create_with_capacity(bitveclen);
   assert(b1 != NULL);
@@ -538,7 +545,7 @@ void test_bit_funcs(int bitveclen) {
   Bit_free(&b2);
 
   // Verify counts are equal
-  assert(count1 == count2 && count2 == count3);
+  assert(count1 == count2 && count2 == count3 && count3 == countr2);
 }
 // Benchmarking helper functions
 void benchmark_functions(benchmark_result_t *results, char *approach,
@@ -591,19 +598,24 @@ static void init_random_indices(int bitveclen, int length_array) {
   if (g_rand_indices == NULL || g_rand_indices_len != length_array) {
     unsigned int *tmp =
         (int *)calloc((size_t)length_array, sizeof(unsigned int));
-    if (!tmp) {
+    uint32_t *tmp_u32 =
+        (uint32_t *)calloc((size_t)length_array, sizeof(uint32_t));
+    if (!tmp || !tmp_u32) {
       free(g_rand_indices);
+      free(g_rand_indices_u32);
       g_rand_indices = NULL;
       g_rand_indices_len = 0;
       return;
     }
     g_rand_indices = tmp;
+    g_rand_indices_u32 = tmp_u32;
     g_rand_indices_len = length_array;
   }
 
   srand(g_seed);
   for (int i = 0; i < length_array; i++) {
-    g_rand_indices[i] = rand() % bitveclen;
+    g_rand_indices[i] = rand() % (bitveclen/2);
+    g_rand_indices_u32[i] = (uint32_t)g_rand_indices[i];
   }
 }
 

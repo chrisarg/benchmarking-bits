@@ -16,8 +16,6 @@ use Sys::Info::Constants qw( :device_cpu );
 my $info = Sys::Info->new;
 my $cpu  = $info->device( CPU => 1 )->identify;
 
-
-
 my $curr_dir      = File::Spec->curdir();
 my $benchmark_dir = File::Spec->catdir( $curr_dir, 'results' );
 mkdir $benchmark_dir unless -d $benchmark_dir;
@@ -130,7 +128,7 @@ my %benchmarks = (
     },
     'Bit::Vector_FillHalfSeq' => sub {
         my $bv = Bit::Vector->new($bitveclen);
-        $bv->Bit_On( $_ ) for @bit_positions;
+        $bv->Bit_On($_) for @bit_positions;
     },
     'Bit::Set_FillHalfSeq' => sub {
         my $bs = Bit_new($bitveclen);
@@ -147,7 +145,7 @@ my %benchmarks = (
     },
     'Bit::Vector_FillHalfMany' => sub {
         my $bv = Bit::Vector->new($bitveclen);
-        $bv->Index_List_Store( @bit_positions );
+        $bv->Index_List_Store(@bit_positions);
     },
     'Bit::Set_FillHalfMany' => sub {
         my $bs = Bit_new($bitveclen);
@@ -192,21 +190,20 @@ while ( my ( $name, $code ) = each %benchmarks ) {
 }
 $benchmark_results->run_iterations( $iters * $batch );
 
-
-sub gen_bit_positions ($bitveclen, $seed) {
+sub gen_bit_positions ( $bitveclen, $seed ) {
     die "bitveclen must be > 0\n" unless defined($bitveclen) && $bitveclen > 0;
 
-    my $n = int($bitveclen * 0.10);
+    my $n = int( $bitveclen * 0.10 );
 
-    srand($seed);  # reproducible (global RNG)
+    srand($seed);      # reproducible (global RNG)
     my @pos;
-    $#pos = $n - 1;  # pre-size
+    $#pos = $n - 1;    # pre-size
 
-    for my $i (0 .. $n - 1) {
-        $pos[$i] = int(rand($bitveclen));  # values in [0, $bitveclen-1]
+    for my $i ( 0 .. $n - 1 ) {
+        $pos[$i] = int( rand($bitveclen/2) );    # values in [0, $bitveclen/2]
     }
 
-    return \@pos;  # return arrayref
+    return \@pos;                              # return arrayref
 }
 
 =pod

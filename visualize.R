@@ -1,5 +1,7 @@
 library(ggplot2)
 library(data.table)
+library(scales)
+library(viridisLite)
 # read benchmark results (CSV files in results/)
 files <- list.files("results", pattern="*.csv", full.names=TRUE)
 
@@ -75,20 +77,22 @@ perlplot1<-ggplot(perl_data, aes(x=factor(bitveclen), y=time, color=library)) +
   scale_y_log10() +
   facet_grid(operation ~ cpu, scales="free_y") +
   labs(title="Bit Vector Benchmarking in Perl", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
-  theme_bw() +scale_colour_viridis_d(name = "Library", option = "plasma") +
+  theme_bw() +scale_colour_viridis_d(name = "Library", option = "turbo") +
   guides(color = guide_legend(override.aes = list(size = 2))) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_grey()
 ggsave("bitvector_benchmark_perl.png", width=12, height=12,plot=perlplot1)
 
 c_data <- data_long[lang == "C"]
 cplot1<-ggplot(c_data, aes(x=factor(bitveclen), y=time, color=library)) +
   geom_point(size=0.2, position=position_dodge2(width=0.4)) +
-  scale_y_log10() +
+  scale_y_log10() + 
   facet_grid(operation ~ cpu, scales="free_y") +
   labs(title="Bit Vector Benchmarking in C", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
-  theme_bw() +scale_colour_viridis_d(name = "Library", option = "plasma") +
+  theme_bw() +scale_colour_viridis_d(name = "Library", option = "turbo") +
   guides(color = guide_legend(override.aes = list(size = 2))) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  theme_grey()
 ggsave("bitvector_benchmark_c.png", width=12, height=12,plot=cplot1)
 
 
@@ -96,10 +100,11 @@ ggsave("bitvector_benchmark_c.png", width=12, height=12,plot=cplot1)
 data_long[, lang_library := paste(lang, library, sep = "_")]
 combined_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=lang_library)) +
   geom_point(size=0.2, position=position_dodge2(width=0.4)) +
-  scale_y_log10() +
+  scale_y_log10() + 
   facet_grid(operation ~ cpu, scales="free_y") +
   labs(title="Bit Vector Benchmarking in Perl and C", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
-  theme_bw() +scale_colour_viridis_d(name = "Lang_Library", option = "plasma") +
+  theme_bw() +scale_colour_viridis_d(name = "Lang_Library", option = "turbo") +
   guides(color = guide_legend(override.aes = list(size = 2))) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme_grey()
 ggsave("bitvector_benchmark_perl_c.png", width=12, height=12,plot=combined_plot)

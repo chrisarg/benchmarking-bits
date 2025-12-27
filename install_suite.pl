@@ -134,3 +134,6 @@ if ( $ENV{BENCHMARKING_BITS_CLEANUP} ) {
         }
     }
 }
+
+# run make to build the C benchmark executable
+run_cmd( 'make' );
