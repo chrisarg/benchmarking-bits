@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# ignore folders c-source, CRoaring and Bit
+c-source/
+CRoaring/
+Bit/

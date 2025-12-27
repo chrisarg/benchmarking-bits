@@ -51,7 +51,7 @@ data_long[, operation := factor(operation, levels=c("new", "Inter", "InterCount"
 # visualize the data using ggplot2; first select only the Perl language, and provide the average and standard deviation (using geometry point and pointrange in logarithmic 2 scale, faceting by operation and processor, using a color scale for library; in the plots  the y axis is time in log2 seconds and the x axis is bitveclen (as factor). Connect the points with lines.
 
 perl_data <- data_long[lang == "Perl"]
-ggplot(perl_data, aes(x=factor(bitveclen), y=time, color=library)) +
+perlplot1<-ggplot(perl_data, aes(x=factor(bitveclen), y=time, color=library)) +
   geom_point(size=0.2, position=position_dodge2(width=0.4)) +
   scale_y_log10() +
   facet_grid(operation ~ cpu, scales="free_y") +
@@ -59,4 +59,5 @@ ggplot(perl_data, aes(x=factor(bitveclen), y=time, color=library)) +
   theme_bw() +scale_colour_viridis_d(name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 2))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave("perl_bitvector_benchmark.png", width=12, height=8)
+  
+ggsave("perl_bitvector_benchmark.png", width=12, height=8,plot=perlplot1)
