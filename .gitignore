@@ -69,3 +69,6 @@ c-libs/
 CRoaring/
 Bit/
 results/
+
+# ignore benchmark executable
+benchmark
