@@ -54,6 +54,16 @@ dkms.conf
 # debug information files
 *.dwo
 
+# images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.tiff
+*.bmp
+*.svg
+*.pdf
+
 # ignore folders c-source, CRoaring and Bit
 c-source/
 CRoaring/
