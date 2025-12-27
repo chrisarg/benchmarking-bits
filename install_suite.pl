@@ -46,6 +46,7 @@ sub have_in_path {
     return 0;
 }
 
+local $ENV{GPU} = 'NONE'; # Disable GPU support for Bit module builds
 # Install the Perl dependencies needed for benchmarking
 my @dependencies = qw(
   Alien::Bit
@@ -79,6 +80,11 @@ for my $module (@comparators) {
 }
 
 # Include dependencies for the C modules
+
+# make directory c-libs if it does not exist
+my $c_libs_dir = File::Spec->catdir( getcwd(), 'c-libs' );
+mkdir $c_libs_dir unless -d $c_libs_dir;
+
 my $cwd         = getcwd();
 my %git_modules = (
     CRoaring => {

@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
   test_bit_funcs(bitveclen);
   puts("Passed correctness tests.");
 
-  init_random_indices(bitveclen, bitveclen / 2);
+  init_random_indices(bitveclen, bitveclen / 10);
   benchmark_result_t results[32];
   int test_num = 0;
   BENCHMARK(CRoaring, new, bitveclen, batch_size, num_of_iterations, results,

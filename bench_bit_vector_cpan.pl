@@ -196,7 +196,7 @@ $benchmark_results->run_iterations( $iters * $batch );
 sub gen_bit_positions ($bitveclen, $seed) {
     die "bitveclen must be > 0\n" unless defined($bitveclen) && $bitveclen > 0;
 
-    my $n = int($bitveclen / 2);
+    my $n = int($bitveclen * 0.10);
 
     srand($seed);  # reproducible (global RNG)
     my @pos;
