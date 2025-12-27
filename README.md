@@ -23,11 +23,11 @@ If the environmental variable BENCHMARKING_BITS_CLEANUP is set, then the git rep
 
 ## Benchmarking
 
-Run the script `batch_run.sh` to execute the benchmarks 
+Run the script `batch_run.sh` to execute the benchmarks
 
 ## Visualization
 
-The R script `visualize.R` can be used to visualize the results; it does require `ggplot2` to make things look nice!
+The R script `visualize.R` can be used to visualize the benchmarks; it does require `base-r`, and the R packages  `ggplot2` and `data-table` to make the results look nice!
 
 ## License
 

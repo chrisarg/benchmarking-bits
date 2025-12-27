@@ -64,7 +64,8 @@ dkms.conf
 *.svg
 *.pdf
 
-# ignore folders c-source, CRoaring and Bit
-c-source/
+# ignore these folders
+c-libs/
 CRoaring/
 Bit/
+results/

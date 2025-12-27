@@ -84,14 +84,14 @@ my %git_modules = (
     CRoaring => {
         url  => 'https://github.com/RoaringBitmap/CRoaring.git',
         post =>
-          [ './amalgamation.sh', 'mv -f roaring.c roaring.h ../c-source' ],
+          [ './amalgamation.sh', 'mv -f roaring.c roaring.h ../c-libs' ],
     },
     Bit => {
         url  => 'https://github.com/chrisarg/Bit.git',
         post => [
             'GPU=NONE make',
             'mv -f ./include/bit.h ./include/libpopcnt.h '
-              . './build/libbit.a ./build/libbit.so ../c-source'
+              . './build/libbit.a ./build/libbit.so ../c-libs'
         ],
     },
 );
