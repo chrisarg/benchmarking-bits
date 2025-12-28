@@ -51,6 +51,7 @@ local $ENV{GPU} = 'NONE'; # Disable GPU support for Bit module builds
 my @dependencies = qw(
   Alien::Bit
   App::cpanminus
+  Benchmark::CSV
   File::Spec
   Getopt::Long
   Util::H2O::More
