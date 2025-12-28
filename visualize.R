@@ -4,10 +4,13 @@ library(scales)
 library(viridisLite)
 
 imgwidth <- 16
+plotpointsize <- 0.4
+dodge_width <- 0.8
 # read benchmark results (CSV files in results/)
 files <- list.files("results", pattern="*.csv", full.names=TRUE)
 
-
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # read function that reads the file and appends the lang, bitveclen, batch, cpu from filename
 read_benchmark_file <- function(file) {
@@ -77,22 +80,22 @@ data_long <- data_long[time > 0]
 
 perl_data <- data_long[lang == "Perl"]
 perlplot1<-ggplot(perl_data, aes(x=factor(bitveclen), y=time, color=library)) +
-  geom_point(size=0.2, position=position_dodge2(width=0.4)) +
+  geom_point(size=plotpointsize, position=position_dodge2(width=dodge_width,preserve = "single")) +
   scale_y_log10() +
   facet_grid(operation ~ cpu, scales="free_y") +
   labs(title="Bit Vector Benchmarking in Perl", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
-  theme_grey() +scale_colour_viridis_d(name = "Library", option = "turbo") +
+  theme_grey() +scale_colour_manual(values = cbbPalette, name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 2))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 ggsave("bitvector_benchmark_perl.png", width=imgwidth, height=12,plot=perlplot1)
 
 c_data <- data_long[lang == "C"]
 cplot1<-ggplot(c_data, aes(x=factor(bitveclen), y=time, color=library)) +
-  geom_point(size=0.2, position=position_dodge2(width=0.4)) +
+  geom_point(size=plotpointsize, position=position_dodge2(width=dodge_width,preserve = "single")) +
   scale_y_log10() + 
   facet_grid(operation ~ cpu, scales="free_y") +
   labs(title="Bit Vector Benchmarking in C", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
-  theme_grey() +scale_colour_viridis_d(name = "Library", option = "turbo") +
+  theme_grey() +scale_colour_manual(values = cbbPalette, name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 2))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 ggsave("bitvector_benchmark_c.png", width=imgwidth, height=12,plot=cplot1)
@@ -101,11 +104,22 @@ ggsave("bitvector_benchmark_c.png", width=imgwidth, height=12,plot=cplot1)
 # create a new feature that combines the language and library into a single column lang_library
 data_long[, lang_library := paste(lang, library, sep = "_")]
 combined_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=lang_library)) +
-  geom_point(size=0.2, position=position_dodge2(width=0.4)) +
+  geom_point(size=plotpointsize, position=position_dodge2(width=dodge_width,preserve = "single")) +
   scale_y_log10() + 
   facet_grid(operation ~ cpu, scales="free_y") +
   labs(title="Bit Vector Benchmarking in Perl and C", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
-  theme_grey() +scale_colour_viridis_d(name = "Library", option = "turbo") +
+  theme_grey() +scale_colour_manual(values = cbbPalette, name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 2))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 ggsave("bitvector_benchmark_perl_c.png", width=imgwidth, height=12,plot=combined_plot)
+
+# now color by processor and facet by operation and language
+processor_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=cpu)) +
+  geom_point(size=plotpointsize, position=position_dodge2(width=dodge_width,preserve = "single")) +
+  scale_y_log10() + 
+  facet_grid(operation ~ lang_library, scales="free_y") +
+  labs(title="Bit Vector Benchmarking by Processor", x="Bit Vector Length", y="Time (seconds, log10 scale)") +
+  theme_grey() +scale_colour_manual(values = cbbPalette, name = "Processor") +
+  guides(color = guide_legend(override.aes = list(size = 2))) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom") 
+ggsave("bitvector_benchmark_processor.png", width=imgwidth, height=12,plot=processor_plot)
