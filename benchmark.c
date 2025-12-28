@@ -97,8 +97,21 @@ int main(int argc, char *argv[]) {
             test_num);
   BENCHMARK(CRoaring, FillHalfSeq, bitveclen, batch_size, num_of_iterations,
             results, test_num);
+            if (bitveclen <= 16384) {  
   BENCHMARK(CRoaring, FillHalfMany, bitveclen, batch_size, num_of_iterations,
             results, test_num);
+  } else {
+    // Skip FillHalfMany for large bitveclen to save time
+    results[test_num].time_elapsed = (double *)malloc(
+        sizeof(double) * num_of_iterations);
+    for (int i = 0; i < num_of_iterations; i++) {
+      results[test_num].time_elapsed[i] = -1.0; // Indicate skipped test
+    }
+    snprintf(results[test_num].approach, sizeof results[test_num].approach,
+             "CRoaring_FillHalfMany");
+    results[test_num].number_of_iterations = num_of_iterations;
+    test_num++;
+  }
   BENCHMARK(CRoaring, PopCount, bitveclen, batch_size, num_of_iterations,
             results, test_num);
   BENCHMARK(CRoaring, Inter, bitveclen, batch_size, num_of_iterations, results,

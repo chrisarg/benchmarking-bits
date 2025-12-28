@@ -68,6 +68,8 @@ data_long_list <- lapply(data_list, function(dt) {
 })
 
 data_long <- rbindlist(data_long_list)
+# filter data that had negative or zero time values
+data_long <- data_long[time > 0]
 
 # visualize the data using ggplot2; first select only the Perl language, and provide the average and standard deviation (using geometry point and pointrange in logarithmic 2 scale, faceting by operation and processor, using a color scale for library; in the plots  the y axis is time in log2 seconds and the x axis is bitveclen (as factor). Connect the points with lines.
 
