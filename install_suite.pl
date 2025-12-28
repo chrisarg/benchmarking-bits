@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/home/chrisarg/perl5/perlbrew/perls/current/bin/perl
 use strict;
 use warnings;
 
@@ -46,11 +46,10 @@ sub have_in_path {
     return 0;
 }
 
-local $ENV{GPU} = 'NONE'; # Disable GPU support for Bit module builds
+
 # Install the Perl dependencies needed for benchmarking
 my @dependencies = qw(
   Alien::Bit
-  App::cpanminus
   Benchmark::CSV
   File::Spec
   Getopt::Long
@@ -138,3 +137,7 @@ if ( $ENV{BENCHMARKING_BITS_CLEANUP} ) {
 
 # run make to build the C benchmark executable
 run_cmd( 'make' );
+
+# make directory for the results
+my $results_dir = File::Spec->catdir( $cwd, 'results' );
+mkdir $results_dir unless -d $results_dir;
