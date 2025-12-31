@@ -15,7 +15,7 @@ use Bit::Set::OO;
 use constant SIZE_OF_TEST_BIT => 65536;
 use constant SIZEOF_BITDB     => 45;
 
-cmpthese 2_000_000, {
+cmpthese 20_000_000, {
     bsoo => sub {
         my $b = Bit::Set->new(SIZE_OF_TEST_BIT);
         $b->bset(2);
