@@ -35,8 +35,12 @@ If the environmental variable BENCHMARKING_BITS_CLEANUP is set, then the git rep
 Run the script `batch_run.sh` to execute the benchmarks:
 * `benchmark` = executable that generates C level benchmark
 * `bench_bit_vector_cpan.pl` = contrasts the Bit::Set and Bit::Set::OO libraries against CPAN (Comprehensive Perl Archive Network) alternatives.
+* `bench_bit_vector_sealed.pl` = benchmark of sealed and unsealed versions of the package
+* `bench_XS_FFI.pl` = benchmark of the XS and the FFI glue for Bit::Set and Bit::Set::OO between versions of 0.10 and 0.11 of the package at CPAN
 
 Run the script `batch_run_sealed.sh` (which calls `bench_bit_vector_sealed.pl`) to compare sealed (at compile time) v.s. dynamiclly resolved (at runtime) Object Oriented method invokations in the Bit::Set::OO interface. Idea and code was kindly contributed by Joe Schaefer. 
+
+Run the script `bench_XS.sh` that will downgrade your version of `Bit::Set` to 0.10, run `bench_XS_FFI.pl`, upgrade to 0.11, re-run `bench_XS_FFI.pl` and then restore your version of `Bit::Set`
 
 ## Visualization
 
