@@ -38,10 +38,9 @@ my $outfname  = File::Spec->catfile( $benchmark_dir,
     $o->outfile . "LangPerl_Length${bitveclen}_Batch${batch}_CPU${cpu}.csv" );
 my $g_seed = $o->g_seed;
 
-say
-"Benchmarking operation in Bit::Vector, Bit::Set, and Bit::Set::OO with "
-."bit length $bitveclen for $iters iterations and outputting to $outfname,"
-. " using random seed $g_seed in perl $^V";
+say "Benchmarking operation in Bit::Vector, Bit::Set, and Bit::Set::OO with "
+  . "bit length $bitveclen for $iters iterations and outputting to $outfname,"
+  . " using random seed $g_seed in perl $^V";
 
 my @bit_positions = @{ gen_bit_positions( $bitveclen, $g_seed ) };
 
@@ -202,10 +201,10 @@ sub gen_bit_positions ( $bitveclen, $seed ) {
     $#pos = $n - 1;    # pre-size
 
     for my $i ( 0 .. $n - 1 ) {
-        $pos[$i] = int( rand($bitveclen/2) );    # values in [0, $bitveclen/2]
+        $pos[$i] = int( rand( $bitveclen / 2 ) );  # values in [0, $bitveclen/2]
     }
 
-    return \@pos;                              # return arrayref
+    return \@pos;                                  # return arrayref
 }
 
 =pod
