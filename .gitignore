@@ -55,14 +55,7 @@ dkms.conf
 *.dwo
 
 # images
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.tiff
-*.bmp
-*.svg
-*.pdf
+
 
 # ignore these folders
 c-libs/
