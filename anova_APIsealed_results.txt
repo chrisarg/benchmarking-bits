@@ -1,0 +1,133 @@
+Linear mixed-effects model fit by REML
+  Data: data_long 
+       AIC      BIC    logLik
+  3635.525 3745.271 -1798.762
+
+Random effects:
+ Formula: ~1 | bitlen_fac
+        (Intercept)  Residual
+StdDev:   0.1377147 0.5029705
+
+Fixed effects:  log(time) ~ approach + mode + log(bitveclen) + operation * approach 
+                                                  Value  Std.Error   DF
+(Intercept)                                   -7.544276 0.23675892 2377
+approachSealed                                -0.046887 0.05623381 2377
+approachProcedural                            -0.693406 0.05623381 2377
+modeXS                                        -0.668507 0.02053368 2377
+log(bitveclen)                                 0.576257 0.03133119    6
+operationCreateAset12.5pct                     0.800220 0.05623381 2377
+operationCreateAset25pct                       1.185289 0.05623381 2377
+operationCreateAset50pct                       1.656802 0.05623381 2377
+operationCreateAset100pct                      2.205040 0.05623381 2377
+approachSealed:operationCreateAset12.5pct      0.057724 0.07952661 2377
+approachProcedural:operationCreateAset12.5pct  0.471971 0.07952661 2377
+approachSealed:operationCreateAset25pct        0.048618 0.07952661 2377
+approachProcedural:operationCreateAset25pct    0.517336 0.07952661 2377
+approachSealed:operationCreateAset50pct        0.058134 0.07952661 2377
+approachProcedural:operationCreateAset50pct    0.574673 0.07952661 2377
+approachSealed:operationCreateAset100pct       0.045258 0.07952661 2377
+approachProcedural:operationCreateAset100pct   0.608760 0.07952661 2377
+                                                t-value p-value
+(Intercept)                                   -31.86480  0.0000
+approachSealed                                 -0.83379  0.4045
+approachProcedural                            -12.33076  0.0000
+modeXS                                        -32.55660  0.0000
+log(bitveclen)                                 18.39243  0.0000
+operationCreateAset12.5pct                     14.23023  0.0000
+operationCreateAset25pct                       21.07787  0.0000
+operationCreateAset50pct                       29.46274  0.0000
+operationCreateAset100pct                      39.21199  0.0000
+approachSealed:operationCreateAset12.5pct       0.72585  0.4680
+approachProcedural:operationCreateAset12.5pct   5.93475  0.0000
+approachSealed:operationCreateAset25pct         0.61134  0.5410
+approachProcedural:operationCreateAset25pct     6.50519  0.0000
+approachSealed:operationCreateAset50pct         0.73100  0.4648
+approachProcedural:operationCreateAset50pct     7.22617  0.0000
+approachSealed:operationCreateAset100pct        0.56910  0.5693
+approachProcedural:operationCreateAset100pct    7.65480  0.0000
+ Correlation: 
+                                              (Intr) apprcS apprcP modeXS
+approachSealed                                -0.119                     
+approachProcedural                            -0.119  0.500              
+modeXS                                        -0.043  0.000  0.000       
+log(bitveclen)                                -0.963  0.000  0.000  0.000
+operationCreateAset12.5pct                    -0.119  0.500  0.500  0.000
+operationCreateAset25pct                      -0.119  0.500  0.500  0.000
+operationCreateAset50pct                      -0.119  0.500  0.500  0.000
+operationCreateAset100pct                     -0.119  0.500  0.500  0.000
+approachSealed:operationCreateAset12.5pct      0.084 -0.707 -0.354  0.000
+approachProcedural:operationCreateAset12.5pct  0.084 -0.354 -0.707  0.000
+approachSealed:operationCreateAset25pct        0.084 -0.707 -0.354  0.000
+approachProcedural:operationCreateAset25pct    0.084 -0.354 -0.707  0.000
+approachSealed:operationCreateAset50pct        0.084 -0.707 -0.354  0.000
+approachProcedural:operationCreateAset50pct    0.084 -0.354 -0.707  0.000
+approachSealed:operationCreateAset100pct       0.084 -0.707 -0.354  0.000
+approachProcedural:operationCreateAset100pct   0.084 -0.354 -0.707  0.000
+                                              lg(bt) oCA12. opCA25 opCA50
+approachSealed                                                           
+approachProcedural                                                       
+modeXS                                                                   
+log(bitveclen)                                                           
+operationCreateAset12.5pct                     0.000                     
+operationCreateAset25pct                       0.000  0.500              
+operationCreateAset50pct                       0.000  0.500  0.500       
+operationCreateAset100pct                      0.000  0.500  0.500  0.500
+approachSealed:operationCreateAset12.5pct      0.000 -0.707 -0.354 -0.354
+approachProcedural:operationCreateAset12.5pct  0.000 -0.707 -0.354 -0.354
+approachSealed:operationCreateAset25pct        0.000 -0.354 -0.707 -0.354
+approachProcedural:operationCreateAset25pct    0.000 -0.354 -0.707 -0.354
+approachSealed:operationCreateAset50pct        0.000 -0.354 -0.354 -0.707
+approachProcedural:operationCreateAset50pct    0.000 -0.354 -0.354 -0.707
+approachSealed:operationCreateAset100pct       0.000 -0.354 -0.354 -0.354
+approachProcedural:operationCreateAset100pct   0.000 -0.354 -0.354 -0.354
+                                              oCA100 aS:CA12 aP:CA12 aS:CA2
+approachSealed                                                             
+approachProcedural                                                         
+modeXS                                                                     
+log(bitveclen)                                                             
+operationCreateAset12.5pct                                                 
+operationCreateAset25pct                                                   
+operationCreateAset50pct                                                   
+operationCreateAset100pct                                                  
+approachSealed:operationCreateAset12.5pct     -0.354                       
+approachProcedural:operationCreateAset12.5pct -0.354  0.500                
+approachSealed:operationCreateAset25pct       -0.354  0.500   0.250        
+approachProcedural:operationCreateAset25pct   -0.354  0.250   0.500   0.500
+approachSealed:operationCreateAset50pct       -0.354  0.500   0.250   0.500
+approachProcedural:operationCreateAset50pct   -0.354  0.250   0.500   0.250
+approachSealed:operationCreateAset100pct      -0.707  0.500   0.250   0.500
+approachProcedural:operationCreateAset100pct  -0.707  0.250   0.500   0.250
+                                              aP:CA2 aS:CA5 aP:CA5 aS:CA10
+approachSealed                                                            
+approachProcedural                                                        
+modeXS                                                                    
+log(bitveclen)                                                            
+operationCreateAset12.5pct                                                
+operationCreateAset25pct                                                  
+operationCreateAset50pct                                                  
+operationCreateAset100pct                                                 
+approachSealed:operationCreateAset12.5pct                                 
+approachProcedural:operationCreateAset12.5pct                             
+approachSealed:operationCreateAset25pct                                   
+approachProcedural:operationCreateAset25pct                               
+approachSealed:operationCreateAset50pct        0.250                      
+approachProcedural:operationCreateAset50pct    0.500  0.500               
+approachSealed:operationCreateAset100pct       0.250  0.500  0.250        
+approachProcedural:operationCreateAset100pct   0.500  0.250  0.500  0.500 
+
+Standardized Within-Group Residuals:
+         Min           Q1          Med           Q3          Max 
+-3.336052109 -0.448122864 -0.004552504  0.494698408  2.632327237 
+
+Number of Observations: 2400
+Number of Groups: 8 
+-----------------------------------
+Anova results
+-----------------------------------
+                   numDF denDF   F-value p-value
+(Intercept)            1  2377 2736.3655  <.0001
+approach               2  2377   69.3105  <.0001
+mode                   1  2377 1059.9322  <.0001
+log(bitveclen)         1     6  338.2816  <.0001
+operation              4  2377 1603.0502  <.0001
+approach:operation     8  2377   11.9736  <.0001

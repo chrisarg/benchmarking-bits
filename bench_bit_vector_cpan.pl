@@ -39,7 +39,9 @@ my $outfname  = File::Spec->catfile( $benchmark_dir,
 my $g_seed = $o->g_seed;
 
 say
-"Benchmarking creation and destruction of Bit::Vector, Bit::Set, and Bit::Set::OO with bit length $bitveclen for $iters iterations and outputting to $outfname";
+"Benchmarking operation in Bit::Vector, Bit::Set, and Bit::Set::OO with "
+."bit length $bitveclen for $iters iterations and outputting to $outfname,"
+. " using random seed $g_seed in perl $^V";
 
 my @bit_positions = @{ gen_bit_positions( $bitveclen, $g_seed ) };
 

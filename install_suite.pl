@@ -28,6 +28,7 @@ my @comparators = qw(
 my @r_packages = qw(
   ggplot2
   data.table
+  nlme
   viridisLite);
 
 if ( !have_in_path('cpanm') ) {
@@ -52,7 +53,7 @@ my @perl = (
 run_cmd( 'perlbrew', @perl );
 
 # install Perl dependencies and comparators  into the optimized Perl
-run_cmd( "GPU=$GPU perlbrew exec --with bitperl cpanm Alien::Bit"  );
+run_cmd("GPU=$GPU perlbrew exec --with bitperl cpanm Alien::Bit");
 for my $module (@dependencies) {
     run_cmd( 'perlbrew', 'exec', '--with', 'bitperl', 'cpanm', $module );
 }
@@ -174,6 +175,8 @@ if (@installed_r_packages) {
 
 # make directory for the results
 my $results_dir = File::Spec->catdir( $cwd, 'results' );
+mkdir $results_dir unless -d $results_dir;
+$results_dir = File::Spec->catdir( $cwd, "results_XS_sealed" );
 mkdir $results_dir unless -d $results_dir;
 
 # change all perl scripts to use the optimized perl. Obtain the list of perl scripts by scanning the current directory for files matching bench_*.pl

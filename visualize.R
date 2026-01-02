@@ -1,6 +1,7 @@
 library(ggplot2)
 library(data.table)
 library(viridisLite)
+library(nlme)
 
 imgwidth <- 16
 plotpointsize <- 0.4
@@ -128,3 +129,16 @@ processor_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=cpu)) +
   guides(color = guide_legend(override.aes = list(size = 2))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom") + guides(color=guide_legend(ncol=2))
 ggsave("bitvector_benchmark_processor.png", width=imgwidth, height=12,plot=processor_plot)
+
+data_long[,bitlen_fac := factor(bitveclen)]
+## carry out the ANOVA
+anova_results<-lme(log(time) ~ operation + lang_library + log(bitveclen) + cpu,
+random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
+
+sink("anova_results.txt")
+summary(anova_results)
+cat("-----------------------------------\n")
+cat("Anova results\n")
+cat("-----------------------------------\n")
+anova(anova_results)
+sink()
