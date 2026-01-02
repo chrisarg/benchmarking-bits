@@ -68,7 +68,7 @@ dkms.conf
 c-libs/
 CRoaring/
 Bit/
-results/
+_Inline/
 
 # ignore benchmark executable
 benchmark

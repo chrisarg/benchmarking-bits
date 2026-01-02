@@ -19,16 +19,34 @@ The pure Perl implementation  Algorithm::BitVector was not considered because in
 
 ## Pre-requisites
 
-You will need a C compiler (gcc and icx have been tested, but clang should work too), a working Perl installation (comes with all xNix systems!) with the `cpanm` package manager (which can installed via e.g. `sudo apt install cpanminus` in Debian/Ubuntu or via the `cpan` tool as : `udo cpan App::cpanminus`). 
-I strongly suggest you consider NOT using the perl installation that came with your operating system, but install a custom perl interpreter using [perlbrew](https://perlbrew.pl/).
-If you would like to:
- * compare the performance of sealed Perl packages, you will need to install the sealed package from CPAN, e.g. via `cpanm sealed`. 
- * visualize the data, you will also need  a working R installation (see under **Visualization** for the R dependencies)
+You will need a:
+*  C compiler (gcc and icx have been tested, but clang should work too), 
+* a working Perl installation (comes with all xNix systems!) with the `cpanm` package manager (which can installed via e.g. `sudo apt install cpanminus` in Debian/Ubuntu or via the `cpan` tool as : `udo cpan App::cpanminus`). 
+* You will need [perlbrew](https://perlbrew.pl/) which you can install via your OS package manager or by following the instructions on the website.
+* A working R (but don't worry about the packages, they will be installed automatically). This is *optional* and if an R is not found, then you will forego the possibility of visualizing your results in a nice way.
+
+Do not worry about messing with your system `Perl` ; `perlbrew` will be used to install a version that will only be used for the benchmarking. *After you are done*, you can delete it (see instructions below).  
+
+### "Juicing" up your processor (optional)
+
+Many Linux installations require manual tweaking of the CPU frequency scaling governor for benchmarks. The governor is a kernel component that adjust's the CPU's frequency to load and power management options. If you really want to see how performance is affected by various choices, it may be best to reduce variability due to load dependent frequency scaling. The following script can be executed from the command line to put your processor in `performance` mode:
+
+```bash
+sudo ./juice_processor_up.sh performance
+```
+The argument performance can be replaced by any of the acceptable CPU governor policies, i.e. `performance` ,`powersave` , `ondemand` , `conservative` , `schedutil` if you want to run the benchmarks under a different policy. 
 
 ## Installation
 
-I suggest you install to a local directory of choice by cloning the github repository. Once you do so, open the Perl scripts and change the first line (the shebang line!) to reflect the location of the perl interpreter you would like to use. Run the `install_suite.pl` that will install the Perl dependencies for the Perl comparators and will make the C benchmarking functions. If you are in a system that does not have a discrete GPU, then you may want to do `GPU = NONE install_suite.sh` or `sudo GPU = NONE install_suite.sh`. If you are in an AMD system, then `GPU = AMD install_suite.sh` *should* work (note I have not tested offloading in those devices). If you would like to offload to an Intel GPU (which could be an integrated one!) then you should have the Intel C compiler (e.g. through [oneAPI](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html)) installed and invoke the installation as `GPU = Intel install_suite.sh`.
-If the environmental variable BENCHMARKING_BITS_CLEANUP is set, then the git repositories will be removed after installation. The install script will also build the C executables that are used to benchmark the C libraries. 
+I suggest you install to a local directory of choice by cloning the github repository. Run the `install_suite.pl` that will install the Perl via perlbrew dependencies for the Perl comparators and will make the C benchmarking functions. 
+* If you are in a system that does not have a discrete GPU, then you may want to do `GPU = NONE install_suite.sh` or `sudo GPU = NONE install_suite.sh`. 
+* If you are in an AMD system, then `GPU = AMD install_suite.sh` *should* work (note I have not tested offloading in those devices). 
+* If you would like to offload to an Intel GPU (which could be an integrated one!) then you should have the Intel C compiler (e.g. through [oneAPI](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html)) installed and invoke the installation as `GPU = Intel install_suite.sh`. 
+* If you omit the environmental variable, the default will be to build everything without GPU support. 
+* If the environmental variable BENCHMARKING_BITS_CLEANUP is set, then the git repositories will be removed after installation. 
+
+The install script will also build the C executables that are used to benchmark the C libraries. 
+One interesting feature of the install script is that it can use numerous cores to install the custom perl, by providing a single numerical argument, e.g. `GPU = NONE BENCHMARKING_BITS_CLEANUP=1 install_suite.sh 8` will use 8 cores to build the `Bit` library without GPU acceleration and will clean the directories at the end. 
 
 ## Benchmarking
 
@@ -44,9 +62,20 @@ Run the script `bench_XS.sh` that will downgrade your version of `Bit::Set` to 0
 
 ## Visualization
 
-The R script `visualize.R` can be used to visualize the benchmarks from `batch_run.sh`; it does require `base-r`, and the R packages  `ggplot2` and `data-table` to make the results look nice!
+The R script `visualize.R` can be used to visualize the benchmarks from `batch_run.sh`; it does require `base-r`, and the R packages  `ggplot2`,  `data-table`, `viridisLite` to make the results look nice! These packages will be installed via the installer script, but wi
 
 The R script `see_the_seal.R` visualizes the results of the sealed benchmark.
+
+## After you are done
+
+You can keep the custom perl interpreter (installed under the alias bitperl) and the R packages installed by doing nothing!
+However, if you want to restore your environment's state, execute `cleanup.sh`.
+If you ended up putting your processor in `performance` and want to tune things down a bit, 
+run the script:
+```bash
+sudo ./squeeze_processor.sh 
+```
+that will attempt to set the processor to `schedutil` or on `ondemand`. If those are not available, it will cycle through the available governors that are not `performance` and will assign the first one that is available (likely one of `powersave` or `conservative`) .
 
 ## License
 
@@ -55,3 +84,4 @@ MIT License. See the LICENSE file for details.
 ## Author
 
 Christos Argyropoulos December 2025
+Sealed benchmarks due to Joe Schaefer. 

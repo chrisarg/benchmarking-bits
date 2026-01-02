@@ -1,4 +1,4 @@
-#!/home/chrisarg/perl5/perlbrew/perls/current/bin/perl
+#!/home/chrisarg/perl5/perlbrew/perls/bitperl/bin/perl
 use v5.38;
 
 use Benchmark::CSV;
@@ -149,12 +149,12 @@ my %benchmarks = (
     },
     'Bit::Set_FillHalfMany' => sub {
         my $bs = Bit_new($bitveclen);
-        Bit_aset( $bs, \@bit_positions, scalar @bit_positions );
+        Bit_aset( $bs, \@bit_positions );
         Bit_free( \$bs );
     },
     'Bit::Set::OO_FillHalfMany' => sub {
         my $bso = Bit::Set->new($bitveclen);
-        $bso->aset( \@bit_positions, scalar @bit_positions );
+        $bso->aset( \@bit_positions );
     },
 );
 

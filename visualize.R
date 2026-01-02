@@ -1,6 +1,5 @@
 library(ggplot2)
 library(data.table)
-library(scales)
 library(viridisLite)
 
 imgwidth <- 16

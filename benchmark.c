@@ -64,7 +64,7 @@ double Bit_T_Inter(int bitveclen, int batch_size);
 double Bit_T_InterCount(int bitveclen, int batch_size);
 
 static unsigned int g_seed = 100;
-
+#define MAX_CROARING_MANY 4096
 int main(int argc, char *argv[]) {
   if (argc != 4 && argc != 5) {
     puts("Usage: ./benchmark <bitveclen> <num of iterations> <batch_size> "
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
             test_num);
   BENCHMARK(CRoaring, FillHalfSeq, bitveclen, batch_size, num_of_iterations,
             results, test_num);
-  if (bitveclen <= 16384) {
+  if (bitveclen <= MAX_CROARING_MANY) {
     BENCHMARK(CRoaring, FillHalfMany, bitveclen, batch_size, num_of_iterations,
               results, test_num);
   } else {
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
             test_num);
   BENCHMARK(CRoaring64, FillHalfSeq, bitveclen, batch_size, num_of_iterations,
             results, test_num);
-  if (bitveclen <= 16384) {
+  if (bitveclen <= MAX_CROARING_MANY) {
     BENCHMARK(CRoaring64, FillHalfMany, bitveclen, batch_size,
               num_of_iterations, results, test_num);
   } else {
