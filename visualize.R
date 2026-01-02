@@ -6,8 +6,10 @@ library(nlme)
 imgwidth <- 16
 plotpointsize <- 0.4
 dodge_width <- 0.8
+
+current_dir <- getwd()
 # read benchmark results (CSV files in results/)
-files <- list.files("results", pattern="*.csv", full.names=TRUE)
+files <- list.files(file.path(current_dir, "results"), pattern="*.csv", full.names=TRUE)
 
 # exclude results with the word Sealed in the filename
 files <- files[!grepl("Sealed", files)]
@@ -93,7 +95,7 @@ perlplot1<-ggplot(perl_data, aes(x=factor(bitveclen), y=time, color=library)) +
   theme_grey() +scale_colour_manual(values = cbbPalette, name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 4))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom") 
-ggsave("bitvector_benchmark_perl.png", width=imgwidth, height=12,plot=perlplot1)
+ggsave(file.path(current_dir, "results", "bitvector_benchmark_perl.png"), width=imgwidth, height=12,plot=perlplot1)
 
 c_data <- data_long[lang == "C"]
 cplot1<-ggplot(c_data, aes(x=factor(bitveclen), y=time, color=library)) +
@@ -104,7 +106,7 @@ cplot1<-ggplot(c_data, aes(x=factor(bitveclen), y=time, color=library)) +
   theme_grey() +scale_colour_manual(values = cbbPalette, name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 4))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom") 
-ggsave("bitvector_benchmark_c.png", width=imgwidth, height=12,plot=cplot1)
+ggsave(file.path(current_dir, "results", "bitvector_benchmark_c.png"), width=imgwidth, height=12,plot=cplot1)
 
 
 # create a new feature that combines the language and library into a single column lang_library
@@ -117,7 +119,7 @@ combined_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=lang_lib
   theme_grey() +scale_colour_manual(values = cbbPalette, name = "Library") +
   guides(color = guide_legend(override.aes = list(size = 4))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom") 
-ggsave("bitvector_benchmark_perl_c.png", width=imgwidth, height=12,plot=combined_plot)
+ggsave(file.path(current_dir, "results", "bitvector_benchmark_perl_c.png"), width=imgwidth, height=12,plot=combined_plot)
 
 # now color by processor and facet by operation and language
 processor_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=cpu)) +
@@ -128,14 +130,14 @@ processor_plot<-ggplot(data_long, aes(x=factor(bitveclen), y=time, color=cpu)) +
   theme_grey() +scale_colour_manual(values = cbbPalette, name = "Processor") +
   guides(color = guide_legend(override.aes = list(size = 2))) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom") + guides(color=guide_legend(ncol=2))
-ggsave("bitvector_benchmark_processor.png", width=imgwidth, height=12,plot=processor_plot)
+ggsave(file.path(current_dir, "results", "bitvector_benchmark_processor.png"), width=imgwidth, height=12,plot=processor_plot)
 
 data_long[,bitlen_fac := factor(bitveclen)]
 ## carry out the ANOVA
 anova_results<-lme(log(time) ~ operation + lang_library + log(bitveclen) + cpu,
 random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
 
-sink("anova_results.txt")
+sink(file.path(current_dir, "results", "anova_results.txt"))
 summary(anova_results)
 cat("-----------------------------------\n")
 cat("Anova results\n")

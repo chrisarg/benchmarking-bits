@@ -10,6 +10,7 @@ dodge_width <- 0.75
 # read benchmark results (CSV files in results/)
 files <- list.files("results_XS_sealed", pattern = "*.csv", full.names = TRUE)
 
+current_dir <- getwd()
 
 # The palette with black:
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -99,7 +100,8 @@ perlplot1 <- ggplot(data_long, aes(x = factor(bitveclen), y = time, color = appr
   scale_shape_discrete(name = "Implementation") +
   guides(color = guide_legend(override.aes = list(size = 2)), shape = guide_legend(override.aes = list(size = 2))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom")
-ggsave("bitvector_APIsealed.png", width = imgwidth, height = 12, plot = perlplot1)
+  # save in results_XS_sealed folder
+ggsave(file.path(current_dir, "results_XS_sealed", "bitvector_APIsealed.png"), width = imgwidth, height = 12, plot = perlplot1)
 
 
 # now color by processor and facet by operation and approach
@@ -113,13 +115,13 @@ processor_plot <- ggplot(data_long, aes(x = factor(bitveclen), y = time, color =
   scale_shape_discrete(name = "Implementation") +
   guides(color = guide_legend(override.aes = list(size = 2)), shape = guide_legend(override.aes = list(size = 2))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "bottom")
-ggsave("bitvector_APIsealed_processor.png", width = imgwidth, height = 12, plot = processor_plot)
+ggsave(file.path(current_dir, "results_XS_sealed", "bitvector_APIsealed_processor.png"), width = imgwidth, height = 12, plot = processor_plot)
 
 data_long[,bitlen_fac := factor(bitveclen)]
 ## carry out a repeated measures regression to see if there are significant differences between the approaches
 anova_results <- lme(log(time) ~  mode + log(bitveclen) + cpu+ operation*approach, random = ~1|bitlen_fac, data = data_long)
 
-sink("anova_APIsealed_results.txt")
+sink(file.path(current_dir, "results_XS_sealed", "anova_APIsealed_results.txt"))
 summary(anova_results)
 cat("-----------------------------------\n")
 cat("Anova results\n")
