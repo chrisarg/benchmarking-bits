@@ -1,6 +1,4 @@
 #include <assert.h>
-#include <immintrin.h>
-#include <smmintrin.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
