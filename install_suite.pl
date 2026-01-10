@@ -54,7 +54,7 @@ my @perl = (
 my @perls = `perlbrew list`;
 chomp @perls;
 say "Installed perls: " . join( ', ', @perls ) . "\n";
-exit 0;
+
 my $bitperl_installed = 0;
 while (@perls) {
     if ( $_ =~ /^bitperl/ ) {
