@@ -12,7 +12,7 @@ my @dependencies = qw(
   FFI::Platypus
   FFI::Platypus::Buffer
   Getopt::Long
-  sealed@8.3.0
+  sealed@8.5.6
   Sys::Info
   Sys::Info::Constants
   Test::More
@@ -75,7 +75,7 @@ if ($bitperl_installed) {
 # install Perl dependencies and comparators  into the optimized Perl
 run_cmd("GPU=$GPU perlbrew exec --with bitperl cpanm Alien::Bit");
 for my $module (@dependencies) {
-    run_cmd( 'perlbrew', 'exec', '--with', 'bitperl', 'cpanm', $module );
+    run_cmd( 'perlbrew', 'exec', '--with', 'bitperl', 'cpanm', $module);
 }
 for my $module (@comparators) {
     run_cmd( 'perlbrew', 'exec', '--with', 'bitperl', 'cpanm', $module );

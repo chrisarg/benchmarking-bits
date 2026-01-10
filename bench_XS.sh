@@ -18,7 +18,7 @@ echo "Installed Bit::Set version 0.10"
 # run the benchmark script against version 0.10
 for len in "${bitlen[@]}"; do
     echo "Running Perl benchmark with bitlen=$len"
-./bench_XS_FFI.pl --bitlen="$len" -iters="$iter" -batch="$batch" -mode=FFI
+    perlbrew exec --with bitperl ./bench_XS_FFI.pl --bitlen="$len" -iters="$iter" -batch="$batch" -mode=FFI
 done
 
 # install latest version of Bit::Set from CPANN
@@ -29,7 +29,7 @@ echo "Installed Bit::Set version $latest_version"
 # run the benchmark script against latest version
 for len in "${bitlen[@]}"; do
     echo "Running Perl benchmark with bitlen=$len"
-./bench_XS_FFI.pl --bitlen="$len" -iters="$iter" -batch="$batch" -mode=XS
+    perlbrew exec --with bitperl ./bench_XS_FFI.pl --bitlen="$len" -iters="$iter" -batch="$batch" -mode=XS
 done
 
 

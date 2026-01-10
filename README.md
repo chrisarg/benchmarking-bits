@@ -22,8 +22,9 @@ The pure Perl implementation  Algorithm::BitVector was not considered because in
 You will need a:
 *  C compiler (gcc and icx have been tested, but clang should work too), 
 * You will need [perlbrew](https://perlbrew.pl/) which you can install via your OS package manager or by following the instructions on the website.
-* The `cpanm` package manager (which can installed via e.g. `perlbrew install-cpanm`).
+* The `cpanm` package manager (which should be installed as `perlbrew install-cpanm`).
 * The libssl, zlib1g  development headers, e.g. installable in Debian/Ubuntu as `sudo apt-get install libssl-dev zlib1g-dev`
+* The `cpuinfo` utilities
 * A working R (but don't worry about the packages, they will be installed automatically). This is *optional* and if an R is not found, then you will forego the possibility of visualizing your results in a nice way.
 
 Do not worry about messing with your system `perl` ; `perlbrew` will be used to install a version that will only be used for the benchmarking. *After you are done*, you can delete it (see instructions below).  

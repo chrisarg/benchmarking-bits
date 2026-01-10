@@ -11,7 +11,7 @@ seed=100
 echo "Running Perl benchmarks..."
 for len in "${bitlen[@]}"; do
     echo "Running Perl benchmark with bitlen=$len"
-    ./bench_bit_vector_cpan.pl -bitlen="$len" -iters="$iter" -batch="$batch"
+    perlbrew exec --with bitperl ./bench_bit_vector_cpan.pl -bitlen="$len" -iters="$iter" -batch="$batch"
 done
 
 # Run against c alternatives

@@ -1,0 +1,158 @@
+Linear mixed-effects model fit by REML
+  Data: data_long 
+       AIC      BIC    logLik
+  7654.271 7783.723 -3807.136
+
+Random effects:
+ Formula: ~1 | bitlen_fac
+        (Intercept) Residual
+StdDev:   0.1509655 0.529001
+
+Fixed effects:  log(time) ~ mode + log(bitveclen) + cpu + operation * approach 
+                                                  Value  Std.Error   DF
+(Intercept)                                   -9.237932 0.25473421 4776
+modeXS                                        -0.373358 0.01527094 4776
+log(bitveclen)                                 0.573074 0.03394897    6
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T    0.296569 0.01527094 4776
+operationCreateAset12.5pct                     0.970216 0.04182120 4776
+operationCreateAset25pct                       1.358269 0.04182120 4776
+operationCreateAset50pct                       1.825624 0.04182120 4776
+operationCreateAset100pct                      2.360540 0.04182120 4776
+approachSealed                                -0.024262 0.04182120 4776
+approachProcedural                            -0.593099 0.04182120 4776
+operationCreateAset12.5pct:approachSealed      0.032949 0.05914411 4776
+operationCreateAset25pct:approachSealed        0.035024 0.05914411 4776
+operationCreateAset50pct:approachSealed        0.032004 0.05914411 4776
+operationCreateAset100pct:approachSealed       0.028318 0.05914411 4776
+operationCreateAset12.5pct:approachProcedural  0.391260 0.05914411 4776
+operationCreateAset25pct:approachProcedural    0.444964 0.05914411 4776
+operationCreateAset50pct:approachProcedural    0.490763 0.05914411 4776
+operationCreateAset100pct:approachProcedural   0.529679 0.05914411 4776
+                                                t-value p-value
+(Intercept)                                   -36.26498  0.0000
+modeXS                                        -24.44894  0.0000
+log(bitveclen)                                 16.88046  0.0000
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T    19.42050  0.0000
+operationCreateAset12.5pct                     23.19915  0.0000
+operationCreateAset25pct                       32.47800  0.0000
+operationCreateAset50pct                       43.65306  0.0000
+operationCreateAset100pct                      56.44362  0.0000
+approachSealed                                 -0.58014  0.5618
+approachProcedural                            -14.18177  0.0000
+operationCreateAset12.5pct:approachSealed       0.55710  0.5775
+operationCreateAset25pct:approachSealed         0.59218  0.5538
+operationCreateAset50pct:approachSealed         0.54111  0.5885
+operationCreateAset100pct:approachSealed        0.47879  0.6321
+operationCreateAset12.5pct:approachProcedural   6.61537  0.0000
+operationCreateAset25pct:approachProcedural     7.52339  0.0000
+operationCreateAset50pct:approachProcedural     8.29775  0.0000
+operationCreateAset100pct:approachProcedural    8.95573  0.0000
+ Correlation: 
+                                              (Intr) modeXS lg(bt) cx1GICi
+modeXS                                        -0.030                      
+log(bitveclen)                                -0.970  0.000               
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T   -0.030  0.000  0.000        
+operationCreateAset12.5pct                    -0.082  0.000  0.000  0.000 
+operationCreateAset25pct                      -0.082  0.000  0.000  0.000 
+operationCreateAset50pct                      -0.082  0.000  0.000  0.000 
+operationCreateAset100pct                     -0.082  0.000  0.000  0.000 
+approachSealed                                -0.082  0.000  0.000  0.000 
+approachProcedural                            -0.082  0.000  0.000  0.000 
+operationCreateAset12.5pct:approachSealed      0.058  0.000  0.000  0.000 
+operationCreateAset25pct:approachSealed        0.058  0.000  0.000  0.000 
+operationCreateAset50pct:approachSealed        0.058  0.000  0.000  0.000 
+operationCreateAset100pct:approachSealed       0.058  0.000  0.000  0.000 
+operationCreateAset12.5pct:approachProcedural  0.058  0.000  0.000  0.000 
+operationCreateAset25pct:approachProcedural    0.058  0.000  0.000  0.000 
+operationCreateAset50pct:approachProcedural    0.058  0.000  0.000  0.000 
+operationCreateAset100pct:approachProcedural   0.058  0.000  0.000  0.000 
+                                              opCA12.5 opCA25 opCA50 opCA100
+modeXS                                                                      
+log(bitveclen)                                                              
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T                                 
+operationCreateAset12.5pct                                                  
+operationCreateAset25pct                       0.500                        
+operationCreateAset50pct                       0.500    0.500               
+operationCreateAset100pct                      0.500    0.500  0.500        
+approachSealed                                 0.500    0.500  0.500  0.500 
+approachProcedural                             0.500    0.500  0.500  0.500 
+operationCreateAset12.5pct:approachSealed     -0.707   -0.354 -0.354 -0.354 
+operationCreateAset25pct:approachSealed       -0.354   -0.707 -0.354 -0.354 
+operationCreateAset50pct:approachSealed       -0.354   -0.354 -0.707 -0.354 
+operationCreateAset100pct:approachSealed      -0.354   -0.354 -0.354 -0.707 
+operationCreateAset12.5pct:approachProcedural -0.707   -0.354 -0.354 -0.354 
+operationCreateAset25pct:approachProcedural   -0.354   -0.707 -0.354 -0.354 
+operationCreateAset50pct:approachProcedural   -0.354   -0.354 -0.707 -0.354 
+operationCreateAset100pct:approachProcedural  -0.354   -0.354 -0.354 -0.707 
+                                              apprcS apprcP oCA12.5:S oCA25:S
+modeXS                                                                       
+log(bitveclen)                                                               
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T                                  
+operationCreateAset12.5pct                                                   
+operationCreateAset25pct                                                     
+operationCreateAset50pct                                                     
+operationCreateAset100pct                                                    
+approachSealed                                                               
+approachProcedural                             0.500                         
+operationCreateAset12.5pct:approachSealed     -0.707 -0.354                  
+operationCreateAset25pct:approachSealed       -0.707 -0.354  0.500           
+operationCreateAset50pct:approachSealed       -0.707 -0.354  0.500     0.500 
+operationCreateAset100pct:approachSealed      -0.707 -0.354  0.500     0.500 
+operationCreateAset12.5pct:approachProcedural -0.354 -0.707  0.500     0.250 
+operationCreateAset25pct:approachProcedural   -0.354 -0.707  0.250     0.500 
+operationCreateAset50pct:approachProcedural   -0.354 -0.707  0.250     0.250 
+operationCreateAset100pct:approachProcedural  -0.354 -0.707  0.250     0.250 
+                                              oCA50:S oCA100:S oCA12.5:P
+modeXS                                                                  
+log(bitveclen)                                                          
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T                             
+operationCreateAset12.5pct                                              
+operationCreateAset25pct                                                
+operationCreateAset50pct                                                
+operationCreateAset100pct                                               
+approachSealed                                                          
+approachProcedural                                                      
+operationCreateAset12.5pct:approachSealed                               
+operationCreateAset25pct:approachSealed                                 
+operationCreateAset50pct:approachSealed                                 
+operationCreateAset100pct:approachSealed       0.500                    
+operationCreateAset12.5pct:approachProcedural  0.250   0.250            
+operationCreateAset25pct:approachProcedural    0.250   0.250    0.500   
+operationCreateAset50pct:approachProcedural    0.500   0.250    0.500   
+operationCreateAset100pct:approachProcedural   0.250   0.500    0.500   
+                                              oCA25:P oCA50:P
+modeXS                                                       
+log(bitveclen)                                               
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T                  
+operationCreateAset12.5pct                                   
+operationCreateAset25pct                                     
+operationCreateAset50pct                                     
+operationCreateAset100pct                                    
+approachSealed                                               
+approachProcedural                                           
+operationCreateAset12.5pct:approachSealed                    
+operationCreateAset25pct:approachSealed                      
+operationCreateAset50pct:approachSealed                      
+operationCreateAset100pct:approachSealed                     
+operationCreateAset12.5pct:approachProcedural                
+operationCreateAset25pct:approachProcedural                  
+operationCreateAset50pct:approachProcedural    0.500         
+operationCreateAset100pct:approachProcedural   0.500   0.500 
+
+Standardized Within-Group Residuals:
+        Min          Q1         Med          Q3         Max 
+-3.50938973 -0.51612860  0.04531081  0.57222433  3.18409961 
+
+Number of Observations: 4800
+Number of Groups: 8 
+-----------------------------------
+Anova results
+-----------------------------------
+                   numDF denDF  F-value p-value
+(Intercept)            1  4776 5167.759  <.0001
+mode                   1  4776  597.751  <.0001
+log(bitveclen)         1     6  284.950  <.0001
+cpu                    1  4776  377.156  <.0001
+operation              4  4776 3194.951  <.0001
+approach               2  4776   94.323  <.0001
+operation:approach     8  4776   16.423  <.0001

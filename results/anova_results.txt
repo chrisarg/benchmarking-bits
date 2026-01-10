@@ -1,0 +1,142 @@
+Linear mixed-effects model fit by REML
+  Data: data_long 
+       AIC      BIC    logLik
+  56936.58 57075.03 -28450.29
+
+Random effects:
+ Formula: ~1 | bitlen_fac
+        (Intercept) Residual
+StdDev:    0.161809 1.396801
+
+Fixed effects:  log(time) ~ operation + lang_library + log(bitveclen) + cpu 
+                                                       Value  Std.Error    DF
+(Intercept)                                       -15.074470 0.18473193 16174
+operationIntersection                               0.895794 0.03680894 16174
+operationIntersection Count                         0.660656 0.03680894 16174
+operationPopulation Count                          -0.344367 0.03680894 16174
+operationFill Half Sequential                       5.086088 0.03680894 16174
+operationFill Half Many                             3.944359 0.04271918 16174
+lang_libraryC_CBitset                               0.675459 0.04497579 16174
+lang_libraryC_CRoaring                              1.061633 0.04355859 16174
+lang_libraryC_CRoaring64                            1.735417 0.04355859 16174
+lang_libraryPerl_Bit::Set                           1.735953 0.04250330 16174
+lang_libraryPerl_Bit::Set::OO                       2.040125 0.04250330 16174
+lang_libraryPerl_Bit::Vector                        2.644571 0.04250330 16174
+lang_libraryPerl_Lucy::Object::BitVector            3.369719 0.04497579 16174
+log(bitveclen)                                      0.470200 0.02005545    10
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz   1.072366 0.02688145 16174
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T         0.061238 0.02688145 16174
+                                                    t-value p-value
+(Intercept)                                       -81.60187  0.0000
+operationIntersection                              24.33633  0.0000
+operationIntersection Count                        17.94825  0.0000
+operationPopulation Count                          -9.35552  0.0000
+operationFill Half Sequential                     138.17536  0.0000
+operationFill Half Many                            92.33229  0.0000
+lang_libraryC_CBitset                              15.01828  0.0000
+lang_libraryC_CRoaring                             24.37252  0.0000
+lang_libraryC_CRoaring64                           39.84098  0.0000
+lang_libraryPerl_Bit::Set                          40.84277  0.0000
+lang_libraryPerl_Bit::Set::OO                      47.99922  0.0000
+lang_libraryPerl_Bit::Vector                       62.22037  0.0000
+lang_libraryPerl_Lucy::Object::BitVector           74.92295  0.0000
+log(bitveclen)                                     23.44499  0.0000
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz  39.89241  0.0000
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T         2.27809  0.0227
+ Correlation: 
+                                                  (Intr) oprtnI oprtIC oprtPC
+operationIntersection                             -0.100                     
+operationIntersection Count                       -0.100  0.500              
+operationPopulation Count                         -0.100  0.500  0.500       
+operationFill Half Sequential                     -0.100  0.500  0.500  0.500
+operationFill Half Many                           -0.106  0.431  0.431  0.431
+lang_libraryC_CBitset                             -0.115  0.000  0.000  0.000
+lang_libraryC_CRoaring                            -0.119  0.000  0.000  0.000
+lang_libraryC_CRoaring64                          -0.119  0.000  0.000  0.000
+lang_libraryPerl_Bit::Set                         -0.115  0.000  0.000  0.000
+lang_libraryPerl_Bit::Set::OO                     -0.115  0.000  0.000  0.000
+lang_libraryPerl_Bit::Vector                      -0.115  0.000  0.000  0.000
+lang_libraryPerl_Lucy::Object::BitVector          -0.115  0.000  0.000  0.000
+log(bitveclen)                                    -0.941  0.000  0.000  0.000
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz -0.073  0.000  0.000  0.000
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T       -0.073  0.000  0.000  0.000
+                                                  oprFHS oprFHM l_C_CB ln_C_CR
+operationIntersection                                                         
+operationIntersection Count                                                   
+operationPopulation Count                                                     
+operationFill Half Sequential                                                 
+operationFill Half Many                            0.431                      
+lang_libraryC_CBitset                              0.000  0.111               
+lang_libraryC_CRoaring                             0.000  0.053  0.470        
+lang_libraryC_CRoaring64                           0.000  0.053  0.470  0.481 
+lang_libraryPerl_Bit::Set                          0.000  0.000  0.473  0.488 
+lang_libraryPerl_Bit::Set::OO                      0.000  0.000  0.473  0.488 
+lang_libraryPerl_Bit::Vector                       0.000  0.000  0.473  0.488 
+lang_libraryPerl_Lucy::Object::BitVector           0.000  0.111  0.464  0.470 
+log(bitveclen)                                     0.000  0.011  0.002  0.005 
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz  0.000  0.000  0.000  0.000 
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T        0.000  0.000  0.000  0.000 
+                                                  l_C_CR6 ln_P_B::S l_P_B::S:
+operationIntersection                                                        
+operationIntersection Count                                                  
+operationPopulation Count                                                    
+operationFill Half Sequential                                                
+operationFill Half Many                                                      
+lang_libraryC_CBitset                                                        
+lang_libraryC_CRoaring                                                       
+lang_libraryC_CRoaring64                                                     
+lang_libraryPerl_Bit::Set                          0.488                     
+lang_libraryPerl_Bit::Set::OO                      0.488   0.500             
+lang_libraryPerl_Bit::Vector                       0.488   0.500     0.500   
+lang_libraryPerl_Lucy::Object::BitVector           0.470   0.473     0.473   
+log(bitveclen)                                     0.005   0.000     0.000   
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz  0.000   0.000     0.000   
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T        0.000   0.000     0.000   
+                                                  l_P_B::V l_P_L: lg(bt)
+operationIntersection                                                   
+operationIntersection Count                                             
+operationPopulation Count                                               
+operationFill Half Sequential                                           
+operationFill Half Many                                                 
+lang_libraryC_CBitset                                                   
+lang_libraryC_CRoaring                                                  
+lang_libraryC_CRoaring64                                                
+lang_libraryPerl_Bit::Set                                               
+lang_libraryPerl_Bit::Set::OO                                           
+lang_libraryPerl_Bit::Vector                                            
+lang_libraryPerl_Lucy::Object::BitVector           0.473                
+log(bitveclen)                                     0.000    0.002       
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz  0.000    0.000  0.000
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T        0.000    0.000  0.000
+                                                  cxIXCEv@2
+operationIntersection                                      
+operationIntersection Count                                
+operationPopulation Count                                  
+operationFill Half Sequential                              
+operationFill Half Many                                    
+lang_libraryC_CBitset                                      
+lang_libraryC_CRoaring                                     
+lang_libraryC_CRoaring64                                   
+lang_libraryPerl_Bit::Set                                  
+lang_libraryPerl_Bit::Set::OO                              
+lang_libraryPerl_Bit::Vector                               
+lang_libraryPerl_Lucy::Object::BitVector                   
+log(bitveclen)                                             
+cpu72 x Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz          
+cpu8 x 12th Gen Intel(R) Core(TM) i3-12100T        0.500   
+
+Standardized Within-Group Residuals:
+        Min          Q1         Med          Q3         Max 
+-3.59339101 -0.55486702  0.01881213  0.50759355  4.87483828 
+
+Number of Observations: 16200
+Number of Groups: 12 
+-----------------------------------
+Anova results
+-----------------------------------
+               numDF denDF   F-value p-value
+(Intercept)        1 16174 23909.507  <.0001
+operation          5 16174  6784.207  <.0001
+lang_library       7 16174  1177.856  <.0001
+log(bitveclen)     1    10   549.668  <.0001
+cpu                2 16174  1003.810  <.0001
