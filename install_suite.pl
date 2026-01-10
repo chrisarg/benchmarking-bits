@@ -12,7 +12,7 @@ my @dependencies = qw(
   FFI::Platypus
   FFI::Platypus::Buffer
   Getopt::Long
-  sealed@8.5.6
+  sealed@8.3.0
   Sys::Info
   Sys::Info::Constants
   Test::More

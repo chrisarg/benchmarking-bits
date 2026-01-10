@@ -22,7 +22,7 @@ my $curr_dir      = File::Spec->curdir();
 my $benchmark_dir = File::Spec->catdir( $curr_dir, "results_XS_sealed" );
 mkdir $benchmark_dir unless -d $benchmark_dir;
 
-my @opts = qw/bitlen=i iters=i outfile=s mode=s/;
+my @opts = qw/bitlen=i iters=i outfile=s mode=s batch=i/;
 my $o    = h2o {
     bitlen  => 16384,
     iters   => 10,
