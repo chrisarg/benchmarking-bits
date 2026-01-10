@@ -56,8 +56,8 @@ chomp @perls;
 say "Installed perls: " . join( ', ', @perls ) . "\n";
 
 my $bitperl_installed = 0;
-while (@perls) {
-    if ( $_ =~ /^bitperl/ ) {
+for my $perl (@perls) {
+    if ( $perl =~ /^bitperl/ ) {
         $bitperl_installed = 1;
     }
 }
@@ -289,8 +289,8 @@ local $SIG{INT} = local $SIG{TERM} = local $SIG{HUP} = local $SIG{QUIT} = sub {
     print "Removing perlbrew installed perl 'bitperl'\n";
     my @perls = `perlbrew list`;
     chomp @perls;
-    while (@perls) {
-        if ( $_ =~ /^bitperl\b/ ) {
+    for my $perl (@perls) {
+        if ( $perl =~ /^bitperl\b/ ) {
             print "Found installed perl 'bitperl', removing it...\n";
             run_cmd( 'perlbrew', 'uninstall', '-f', 'bitperl' );
         }
