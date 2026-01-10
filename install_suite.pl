@@ -10,6 +10,7 @@ my @dependencies = qw(
   Benchmark::CSV
   File::Spec
   FFI::Platypus
+  FFI::Platypus::Buffer
   Getopt::Long
   sealed@8.3.0
   Sys::Info
