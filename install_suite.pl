@@ -9,11 +9,13 @@ use File::Spec;
 my @dependencies = qw(
   Benchmark::CSV
   File::Spec
+  FFI::Platypus
   Getopt::Long
   sealed@8.3.0
   Sys::Info
   Sys::Info::Constants
   Test::More
+  Unix::Processors
   Util::H2O::More
 );
 
