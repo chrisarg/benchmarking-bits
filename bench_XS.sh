@@ -19,11 +19,12 @@ for len in "${bitlen[@]}"; do
 ./bench_XS_FFI.pl --bitlen="$len" -iters="$iter" -batch="$batch" -mode=FFI
 done
 
-# install version 0.11 of Bit::Set from CPANN
+# install latest version of Bit::Set from CPANN
 perlbrew exec --with bitperl cpanm --uninstall --force Bit::Set >/dev/null 2>&1
-perlbrew exec --with bitperl cpanm --force Bit::Set@0.11 >/dev/null 2>&1
-echo "Installed Bit::Set version 0.11"
-# run the benchmark script against version 0.11
+perlbrew exec --with bitperl cpanm --force Bit::Set >/dev/null 2>&1
+latest_version=$(perlbrew exec --with bitperl perl -MBit::Set -e 'print $Bit::Set::VERSION' )
+echo "Installed Bit::Set version $latest_version"
+# run the benchmark script against latest version
 for len in "${bitlen[@]}"; do
     echo "Running Perl benchmark with bitlen=$len"
 ./bench_XS_FFI.pl --bitlen="$len" -iters="$iter" -batch="$batch" -mode=XS

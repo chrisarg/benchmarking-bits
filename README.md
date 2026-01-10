@@ -1,8 +1,13 @@
 # benchmarking-bits
-Benchmarking of the Bit library against alternatives 
+Benchmarking of the Bit library (single thread, without device acceleration) against alternatives. 
 
 ## Description
 Runs comparisons against implementations of Bit and the Bit Perl API:
+
+## C
+- [Bit](https://github.com/chrisarg/Bit/)
+- [CRoaring](https://github.com/RoaringBitmap/CRoaring) 
+- [CBitset](https://github.com/lemire/cbitset) (note that we use the version packaged inside CRoaring) 
 
 ### Perl
 - [Bit::Set](https://metacpan.org/pod/Bit::Set)
@@ -10,22 +15,17 @@ Runs comparisons against implementations of Bit and the Bit Perl API:
 - [Bit::Vector](https://metacpan.org/pod/Bit::Vector)
 - [Lucy::Object::BitVector](https://metacpan.org/dist/Lucy/view/lib/Lucy/Object/BitVector.pm)
 
-## C
-- [Bit](https://github.com/chrisarg/Bit/)
-- [CRoaring](https://github.com/RoaringBitmap/CRoaring) 
-- [CBitset](https://github.com/lemire/cbitset) (note that we use the version packaged inside CRoaring) 
-
 The pure Perl implementation  Algorithm::BitVector was not considered because in preliminary experiments was >3 orders of magnitude slower than the others
 
 ## Pre-requisites
 
 You will need a:
 *  C compiler (gcc and icx have been tested, but clang should work too), 
-* a working Perl installation (comes with all xNix systems!) with the `cpanm` package manager (which can installed via e.g. `sudo apt install cpanminus` in Debian/Ubuntu or via the `cpan` tool as : `udo cpan App::cpanminus`). 
+* a working Perl installation (comes with all xNix systems!) with the `cpanm` package manager (which can installed via e.g. `sudo apt install cpanminus` in Debian/Ubuntu or via the `cpan` tool as : `sudo cpan App::cpanminus`). 
 * You will need [perlbrew](https://perlbrew.pl/) which you can install via your OS package manager or by following the instructions on the website.
 * A working R (but don't worry about the packages, they will be installed automatically). This is *optional* and if an R is not found, then you will forego the possibility of visualizing your results in a nice way.
 
-Do not worry about messing with your system `Perl` ; `perlbrew` will be used to install a version that will only be used for the benchmarking. *After you are done*, you can delete it (see instructions below).  
+Do not worry about messing with your system `perl` ; `perlbrew` will be used to install a version that will only be used for the benchmarking. *After you are done*, you can delete it (see instructions below).  
 
 ### "Juicing" up your processor (optional)
 
@@ -51,19 +51,30 @@ One interesting feature of the install script is that it can use numerous cores 
 ## Benchmarking
 
 **Run the script `batch_run.sh` to execute the benchmarks**:
-* `benchmark` = executable that generates C level benchmark
+* `benchmark` = executable that generates C level benchmarks
 * `bench_bit_vector_cpan.pl` = contrasts the Bit::Set and Bit::Set::OO libraries against CPAN (Comprehensive Perl Archive Network) alternatives.
 * `bench_bit_vector_sealed.pl` = benchmark of sealed and unsealed versions of the package
-* `bench_XS_FFI.pl` = benchmark of the XS and the FFI glue for Bit::Set and Bit::Set::OO between versions of 0.10 and 0.11 of the package at CPAN
+* `bench_XS_FFI.pl` = benchmark of the XS and the FFI glue for Bit::Set and Bit::Set::OO between versions of 0.10 and the latest (XS based) version of the package at CPAN
 
 **Run the script `bench_XS.sh` to benchmark the XS interface and `sealed` objects** 
-This script will downgrade your version of `Bit::Set` to 0.10, run `bench_XS_FFI.pl`, upgrade to 0.11, re-run `bench_XS_FFI.pl` and then restore your version of `Bit::Set`. By doing so it will profile the XS interface of `Bit::Set` and `Bit::Set::OO` at version 0.11 v.s. the FFI interface that was used in version 0.10. It will also profile the `sealed` objects that resolves method calls at compile time against the traditional Object Oriented method invokation in Perl, which resolves methods at runtime. 
+This script will downgrade your version of `Bit::Set` to 0.10, run `bench_XS_FFI.pl`, upgrade to the latest versipn, re-run `bench_XS_FFI.pl` and then restore your version of `Bit::Set`. By doing so it will profile the XS interface of `Bit::Set` and `Bit::Set::OO` at the latest version v.s. the FFI interface that was used in version 0.10. It will also profile the `sealed` objects that resolves method calls at compile time against the traditional Object Oriented method invokation in Perl, which resolves methods at runtime. 
 
 ## Visualization
 
 The R script `visualize.R` can be used to visualize the benchmarks from `batch_run.sh`; it does require `base-r`, and the R packages  `ggplot2`,  `data-table`, `viridisLite` to make the results look nice! These packages will be installed via the installer script, but wi
 
 The R script `visualize_XS_sealed.R` visualizes the results of the XS and `sealed` benchmarks.
+
+Both scripts look into the folders `results` and `results_XS_sealed` for their input; if you happen to have run the benchmarks in more than one processors, and have stored the results there,  these R scripts will happily break down the results by processor type when visualizing. 
+
+## Benchmark and plot everything
+
+If you simply want to run everything and are happy with the default parameters for benchmarks, run the following:
+
+```bash
+sudo ./bench_summarize_all.sh
+```
+The script will elevate your processor to maximum performance, run all the benchmark scripts and visualizes and then reset it back to a less powerhungry mode (see section *After you are done* for restoring CPU governor policies).
 
 ## After you are done
 
@@ -78,7 +89,8 @@ that will attempt to set the processor to `schedutil` or on `ondemand`. If those
 
 ## TO-DO
 
-* Add benchmarks for the XS versions of the`Bit::Set::DB` and `Bit::Set::DB::OO` interfaces (these two APIs still rely on FFI in the current (version 0.11) of the library)
+* Add benchmarks for the XS versions of the`Bit::Set::DB` and `Bit::Set::DB::OO` interfaces 
+* Added multi-threaded (OpenMP benchmarks)
 * Add GPU benchmarks
 
 ## License
@@ -88,4 +100,4 @@ MIT License. See the LICENSE file for details.
 ## Author
 
 Christos Argyropoulos December 2025
-Sealed benchmarks and XS code for `Bit::Set` and `Bit::Set::OO` were contributed by Joe Schaefer. 
+Sealed benchmarks were contributed by Joe Schaefer and later expanded by yours truly. 

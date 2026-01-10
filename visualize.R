@@ -134,8 +134,16 @@ ggsave(file.path(current_dir, "results", "bitvector_benchmark_processor.png"), w
 
 data_long[,bitlen_fac := factor(bitveclen)]
 ## carry out the ANOVA
-anova_results<-lme(log(time) ~ operation + lang_library + log(bitveclen) + cpu,
-random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
+# if cpu has more than one value, include it as a fixed effect
+cpu_levels <- unique(data_long$cpu)
+if (length(cpu_levels) > 1) {
+  anova_results<-lme(log(time) ~ operation + lang_library + log(bitveclen) + cpu,
+  random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
+} else {
+  anova_results<-lme(log(time) ~ operation + lang_library + log(bitveclen),
+  random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
+}
+
 
 sink(file.path(current_dir, "results", "anova_results.txt"))
 summary(anova_results)

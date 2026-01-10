@@ -119,7 +119,16 @@ ggsave(file.path(current_dir, "results_XS_sealed", "bitvector_APIsealed_processo
 
 data_long[,bitlen_fac := factor(bitveclen)]
 ## carry out a repeated measures regression to see if there are significant differences between the approaches
-anova_results <- lme(log(time) ~  mode + log(bitveclen) + cpu+ operation*approach, random = ~1|bitlen_fac, data = data_long)
+
+# if cpu has more than one value, include it as a fixed effect
+cpu_levels <- unique(data_long$cpu)
+if (length(cpu_levels) > 1) {
+  anova_results<-lme(log(time) ~ mode + log(bitveclen) + cpu+ operation*approach,
+  random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
+} else {
+  anova_results<-lme(log(time) ~ mode + log(bitveclen) + operation*approach,
+  random = ~1|bitlen_fac, data = data_long,na.action=na.omit)
+}
 
 sink(file.path(current_dir, "results_XS_sealed", "anova_APIsealed_results.txt"))
 summary(anova_results)
