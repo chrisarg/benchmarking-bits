@@ -53,11 +53,11 @@ my @perl = (
 # check if bitperl is already installed
 my @perls = `perlbrew list`;
 chomp @perls;
-say "Installed perls: " . join( ', ', @perls ) . "\n";
+
 
 my $bitperl_installed = 0;
 for my $perl (@perls) {
-    if ( $perl =~ /^bitperl/ ) {
+    if ( $perl =~ /bitperl/ ) {
         $bitperl_installed = 1;
     }
 }
