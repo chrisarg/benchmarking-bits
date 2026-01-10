@@ -50,7 +50,22 @@ my @perl = (
     qw(install -Doptimize=-O3 --noman -n --switch -j),
     $procs, qw(--as bitperl 5.42.0)
 );
-run_cmd( 'perlbrew', @perl );
+# check if bitperl is already installed
+my @perls = `perlbrew list`;
+chomp @perls;
+my $bitperl_installed = 0;
+while (@perls) {
+    if ( $_ =~ /^bitperl\b/ ) {
+        $bitperl_installed = 1;
+    }
+}
+if ($bitperl_installed) {
+    print "Perl 'bitperl' already installed (skipping perlbrew install)\n";
+} else {
+    print "Installing optimized Perl 'bitperl' via perlbrew...\n";
+    run_cmd( 'perlbrew', @perl );
+}
+
 
 # install Perl dependencies and comparators  into the optimized Perl
 run_cmd("GPU=$GPU perlbrew exec --with bitperl cpanm Alien::Bit");
