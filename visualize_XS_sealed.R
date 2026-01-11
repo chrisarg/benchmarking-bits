@@ -4,7 +4,7 @@ library(scales)
 library(viridisLite)
 library(nlme)
 
-imgwidth <- 16
+imgwidth <- 24
 plotpointsize <- 1.2
 dodge_width <- 0.75
 # read benchmark results (CSV files in results/)

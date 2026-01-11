@@ -3,7 +3,7 @@ library(data.table)
 library(viridisLite)
 library(nlme)
 
-imgwidth <- 16
+imgwidth <- 24
 plotpointsize <- 0.4
 dodge_width <- 0.8
 
